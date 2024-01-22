@@ -7,7 +7,7 @@ interface RootLayoutProps {
 }
 
 export default async function RootLayout({ children }: RootLayoutProps) {
-      const { userId } = auth();
+      const { userId } = await auth();
 
       if (!userId) {
             redirect("/sign-in")
