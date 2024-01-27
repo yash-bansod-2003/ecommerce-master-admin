@@ -11,11 +11,14 @@ datasource db {
 }
 
 model Store {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
   name      String
   userId    String
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  updatedAt DateTime @default(now()) @map(name: "updated_at")
+  createdAt DateTime    @default(now()) @map(name: "created_at")
+  updatedAt DateTime    @default(now()) @map(name: "updated_at")
+  billboard Billboard[]
+  colors    Color[]
+  sizes     Size[]
 
   @@map("stores")
 }
@@ -23,7 +26,9 @@ model Store {
 model Color {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String
-  userId    String   @db.ObjectId
+  userId    String
+  storeId   String   @db.ObjectId
+  store     Store    @relation(fields: [storeId], references: [id])
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @default(now()) @map(name: "updated_at")
 
@@ -33,9 +38,24 @@ model Color {
 model Size {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String
-  userId    String   @db.ObjectId
+  userId    String
+  storeId   String   @db.ObjectId
+  store     Store    @relation(fields: [storeId], references: [id])
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @default(now()) @map(name: "updated_at")
 
   @@map("sizes")
+}
+
+model Billboard {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  label     String
+  image     String
+  userId    String
+  storeId   String   @db.ObjectId
+  store     Store    @relation(fields: [storeId], references: [id])
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+
+  @@map("billboards")
 }

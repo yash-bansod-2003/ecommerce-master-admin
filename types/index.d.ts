@@ -2,7 +2,7 @@ import type { Icon } from "lucide-react"
 
 import { Icons } from "@/components/icons"
 
-export type SidebarNavItem = {
+export type MainNavItem = {
       title: string
       disabled?: boolean
       external?: boolean
@@ -21,5 +21,10 @@ export type SidebarNavItem = {
 
 export type DashboardConfig = {
       mainNav: MainNavItem[]
-      sidebarNav: SidebarNavItem[]
+}
+
+
+export type StoreSelectItem = {
+      label: string
+      value: string
 }

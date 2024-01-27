@@ -9,8 +9,8 @@ interface UseStoreModalProps {
 
 const useStoreModal = create<UseStoreModalProps>()(devtools((set) => ({
       isOpen: false,
-      onOpen: () => set(() => ({ isOpen: true })),
-      onClose: () => set(() => ({ isOpen: false })),
+      onOpen: () => set((state) => ({ ...state, isOpen: true })),
+      onClose: () => set((state) => ({ ...state, isOpen: false })),
 })));
 
 

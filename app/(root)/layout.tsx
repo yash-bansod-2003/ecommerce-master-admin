@@ -7,7 +7,7 @@ interface RootLayoutProps {
 }
 
 export default async function RootLayout({ children }: RootLayoutProps) {
-      const { userId } = await auth();
+      const { userId } = auth();
 
       if (!userId) {
             redirect("/sign-in")
@@ -23,5 +23,5 @@ export default async function RootLayout({ children }: RootLayoutProps) {
             redirect(`/${dbStore.id}`)
       }
 
-      return <div className="min-h-screen flex items-center justify-center">{children}</div>
+      return <div>{children}</div>
 }

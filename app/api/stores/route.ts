@@ -41,3 +41,16 @@ export async function POST(
             return new NextResponse(null, { status: 500 })
       }
 }
+
+export async function GET(
+      req: Request
+) {
+      try {
+            // Obtain the stores.
+            const dbStores = await db.store.findMany()
+
+            return NextResponse.json({ ...dbStores }, { status: 201 })
+      } catch (error) {
+            return new NextResponse(null, { status: 500 })
+      }
+}
