@@ -2,10 +2,10 @@ import { auth } from "@clerk/nextjs"
 import { redirect } from "next/navigation"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
-import { StoreNameForm } from "@/components/store-name-form"
+import { StoreNameForm } from "@/components/dashboard/store/store-name-form"
 import { db } from "@/lib/db"
 import { Clipboard } from "@/components/clipboard"
-import { StoreDeleteButton } from "@/components/store-delete-button"
+import { StoreDeleteButton } from "@/components/dashboard/store/store-delete-button"
 import { useOrigin } from "@/hooks/use-origin"
 
 export const metadata = {

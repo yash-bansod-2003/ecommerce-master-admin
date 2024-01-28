@@ -4,7 +4,7 @@ import * as React from "react";
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { Billboard, Category } from "@prisma/client"
+import { Billboard } from "@prisma/client"
 
 import { FileUpload } from "@/components/file-upload";
 
@@ -18,44 +18,36 @@ import {
       FormLabel,
       FormMessage,
 } from "@/components/ui/form"
-import {
-      Select,
-      SelectContent,
-      SelectItem,
-      SelectTrigger,
-      SelectValue,
-} from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
-import { categorySchema } from "@/lib/validations/category"
+import { billboardSchema } from "@/lib/validations/billboard"
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Icons } from "../icons";
+import { Icons } from "../../../icons";
 
 interface BillboardFormProps extends React.HTMLAttributes<HTMLDivElement> {
-      category: Category | null
-      billboards: Array<Billboard>
+      billboard: Billboard | null
       storeId: string
 }
 
 
-export const CategoryForm: React.FC<BillboardFormProps> = ({ storeId, category, billboards, className, ...props }) => {
+export const BillboardForm: React.FC<BillboardFormProps> = ({ storeId, billboard, className, ...props }) => {
       const router = useRouter()
       const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
       // 1. Define your form.
-      const form = useForm<z.infer<typeof categorySchema>>({
-            resolver: zodResolver(categorySchema),
+      const form = useForm<z.infer<typeof billboardSchema>>({
+            resolver: zodResolver(billboardSchema),
             defaultValues: {
-                  name: category?.name || "",
-                  billboardId: category?.billboardId || ""
+                  label: billboard?.label || "",
+                  image: billboard?.image || ""
             },
       })
 
 
-      async function onSubmit(values: z.infer<typeof categorySchema>) {
+      async function onSubmit(values: z.infer<typeof billboardSchema>) {
             setIsLoading(true)
 
-            const response = await fetch(`/api/${storeId}/categories`, {
+            const response = await fetch(`/api/${storeId}/billboards`, {
                   method: "POST",
                   headers: {
                         "Content-Type": "application/json",
@@ -67,7 +59,7 @@ export const CategoryForm: React.FC<BillboardFormProps> = ({ storeId, category, 
 
             if (!response?.ok) {
                   return toast.error("Something went wrong.", {
-                        description: "Your category was not created. Please try again."
+                        description: "Your billboard was not created. Please try again."
                   })
             }
 
@@ -78,7 +70,7 @@ export const CategoryForm: React.FC<BillboardFormProps> = ({ storeId, category, 
 
             router.push(`/${store.id}`)
 
-            return toast.success("Your category was created.", {
+            return toast.success("Your Billboard was created.", {
                   description: "please check your dashboard for further updates."
             })
       }
@@ -86,22 +78,22 @@ export const CategoryForm: React.FC<BillboardFormProps> = ({ storeId, category, 
       return (
             <Form {...form}>
                   <form onSubmit={form.handleSubmit(onSubmit)} action="">
-                        <div className="space-y-6" {...props}>
+                        <div className="space-y-6">
                               <FormField
                                     control={form.control}
-                                    name="name"
+                                    name="image"
                                     render={({ field }) => (
                                           <FormItem>
-                                                <FormLabel>Name</FormLabel>
+                                                <FormLabel>Image</FormLabel>
                                                 <FormControl>
-                                                      <Input
-                                                            placeholder="Category Name"
-                                                            className="max-w-[400px]"
-                                                            {...field}
+                                                      <FileUpload
+                                                            endpoint="imageUploader"
+                                                            value={field.value}
+                                                            onChange={field.onChange}
                                                       />
                                                 </FormControl>
                                                 <FormDescription>
-                                                      This is your category identification name.
+                                                      This is your billboard display image.
                                                 </FormDescription>
                                                 <FormMessage />
                                           </FormItem>
@@ -109,29 +101,15 @@ export const CategoryForm: React.FC<BillboardFormProps> = ({ storeId, category, 
                               />
                               <FormField
                                     control={form.control}
-                                    name="billboardId"
+                                    name="label"
                                     render={({ field }) => (
                                           <FormItem>
-                                                <FormLabel>Billboard</FormLabel>
-                                                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                                      <FormControl className="w-[400px]">
-                                                            <SelectTrigger>
-                                                                  <SelectValue placeholder="Select a billboard" />
-                                                            </SelectTrigger>
-                                                      </FormControl>
-                                                      <SelectContent>
-                                                            {billboards.map((billboard) => (
-                                                                  <SelectItem
-                                                                        key={billboard.id}
-                                                                        value={billboard.id}
-                                                                  >
-                                                                        {billboard.label}
-                                                                  </SelectItem>
-                                                            ))}
-                                                      </SelectContent>
-                                                </Select>
+                                                <FormLabel>Label</FormLabel>
+                                                <FormControl>
+                                                      <Input placeholder="Billboard Label" className="max-w-[400px]" {...field} />
+                                                </FormControl>
                                                 <FormDescription>
-                                                      This is your billboard.
+                                                      This is your billboard identification label.
                                                 </FormDescription>
                                                 <FormMessage />
                                           </FormItem>

@@ -4,11 +4,11 @@ import { redirect } from "next/navigation"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 import { db } from "@/lib/db"
-import { BillboardForm } from "@/components/forms/billboard-form"
+import { BillboardForm } from "@/components/dashboard/billboard/forms/billboard-form"
 
 export const metadata = {
-      title: "Billboards",
-      description: "Manage billboards and billboards settings.",
+      title: "Billboard",
+      description: "billboard customization.",
 }
 
 interface BillboardPageProps {

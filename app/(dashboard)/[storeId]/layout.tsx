@@ -1,6 +1,6 @@
 import { dashboardConfig } from "@/config/dashboard"
 import { MainNav } from "@/components/dashboard/main-nav";
-import { StoreSwitcher } from "@/components/dashboard/store-switcher";
+import { StoreSwitcher } from "@/components/dashboard/store/store-switcher";
 import { UserNav } from "@/components/dashboard/user-nav";
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";

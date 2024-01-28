@@ -19,7 +19,7 @@ import { Input } from "@/components/ui/input"
 import { sizeSchema } from "@/lib/validations/size"
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Icons } from "../icons";
+import { Icons } from "../../../icons";
 
 interface SizeFormProps extends React.HTMLAttributes<HTMLDivElement> {
       size: Size | null

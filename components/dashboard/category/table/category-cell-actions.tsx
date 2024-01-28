@@ -13,14 +13,14 @@ import {
       DropdownMenuSeparator,
       DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { SizeColumn } from "./columns"
-import { CategoryDeleteButton } from "@/components/category-delete-button";
+import { CategoryColumn } from "./columns"
+import { CategoryDeleteButton } from "@/components/dashboard/category/category-delete-button";
 
-type SizeCellActionsProps = {
-      data: SizeColumn
+type CategoryCellActionsProps = {
+      data: CategoryColumn
 }
 
-const SizeCellActions: React.FC<SizeCellActionsProps> = ({ data }) => {
+const CategoryCellActions: React.FC<CategoryCellActionsProps> = ({ data }) => {
       const router = useRouter();
       const params = useParams<{ storeId: string }>();
 
@@ -63,4 +63,4 @@ const SizeCellActions: React.FC<SizeCellActionsProps> = ({ data }) => {
       )
 }
 
-export { SizeCellActions }
+export { CategoryCellActions }

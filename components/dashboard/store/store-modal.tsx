@@ -8,7 +8,7 @@ import {
       DialogHeader,
       DialogTitle,
 } from "@/components/ui/dialog"
-import { StoreForm } from "@/components/forms/store-form";
+import { StoreForm } from "@/components/dashboard/store/forms/store-form";
 import { useMounted } from "@/hooks/use-mounted";
 
 interface StoreModalProps {

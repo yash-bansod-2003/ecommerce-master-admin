@@ -30,15 +30,17 @@ import {
       DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Icons } from "@/components/icons"
+import { FilterProps } from "@/types"
 
-interface DataTableProps<TData, TValue> {
+interface DataTableProps<TData, TValue> extends FilterProps {
       columns: ColumnDef<TData, TValue>[]
       data: TData[]
 }
 
-export function SizeDataTable<TData, TValue>({
+export function DataTable<TData, TValue>({
       columns,
       data,
+      filterKey
 }: DataTableProps<TData, TValue>) {
       const [sorting, setSorting] = React.useState<SortingState>([])
       const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
@@ -65,10 +67,10 @@ export function SizeDataTable<TData, TValue>({
             <div>
                   <div className="flex items-center py-4">
                         <Input
-                              placeholder="Filter names..."
-                              value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
+                              placeholder={`Filter ${filterKey}s...`}
+                              value={(table.getColumn(filterKey)?.getFilterValue() as string) ?? ""}
                               onChange={(event) =>
-                                    table.getColumn("name")?.setFilterValue(event.target.value)
+                                    table.getColumn(filterKey)?.setFilterValue(event.target.value)
                               }
                               className="max-w-sm"
                         />

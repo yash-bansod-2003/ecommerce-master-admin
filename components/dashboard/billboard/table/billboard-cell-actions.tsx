@@ -13,14 +13,14 @@ import {
       DropdownMenuSeparator,
       DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { CategoryColumn } from "./columns"
-import { CategoryDeleteButton } from "@/components/category-delete-button";
+import { BillboardColumn } from "./columns"
+import { BillboardDeleteButton } from "@/components/dashboard/billboard/billboard-delete-button";
 
-type CategoryCellActionsProps = {
-      data: CategoryColumn
+type BillboardCellActionsProps = {
+      data: BillboardColumn
 }
 
-const CategoryCellActions: React.FC<CategoryCellActionsProps> = ({ data }) => {
+const BillboardCellActions: React.FC<BillboardCellActionsProps> = ({ data }) => {
       const router = useRouter();
       const params = useParams<{ storeId: string }>();
 
@@ -42,7 +42,7 @@ const CategoryCellActions: React.FC<CategoryCellActionsProps> = ({ data }) => {
                         </DropdownMenuItem>
                         <DropdownMenuItem
                               onClick={() => {
-                                    router.push(`/${params.storeId}/categories/${data.id}`)
+                                    router.push(`/${params.storeId}/billboards/${data.id}`)
                               }}
                         >
                               <Icons.edit className="h-4 w-4 mr-2" />
@@ -50,17 +50,17 @@ const CategoryCellActions: React.FC<CategoryCellActionsProps> = ({ data }) => {
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem asChild>
-                              <CategoryDeleteButton
+                              <BillboardDeleteButton
                                     storeId={params.storeId}
-                                    categoryId={data.id}
+                                    billboardId={data.id}
                               >
                                     <Icons.trash className="h-4 w-4 mr-2" />
                                     Delete
-                              </CategoryDeleteButton>
+                              </BillboardDeleteButton>
                         </DropdownMenuItem>
                   </DropdownMenuContent>
             </DropdownMenu>
       )
 }
 
-export { CategoryCellActions }
+export { BillboardCellActions }

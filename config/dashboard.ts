@@ -13,11 +13,6 @@ export const dashboardConfig: DashboardConfig = {
                   icon: "product",
             },
             {
-                  title: "Products",
-                  href: "/dashboard/products",
-                  icon: "product",
-            },
-            {
                   title: "Sizes",
                   href: "/dashboard/sizes",
                   icon: "size",
@@ -26,6 +21,11 @@ export const dashboardConfig: DashboardConfig = {
                   title: "Colors",
                   href: "/dashboard/colors",
                   icon: "palette",
+            },
+            {
+                  title: "Products",
+                  href: "/dashboard/products",
+                  icon: "product",
             },
             {
                   title: "Settings",

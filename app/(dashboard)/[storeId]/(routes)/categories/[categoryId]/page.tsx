@@ -4,8 +4,8 @@ import { redirect } from "next/navigation"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 import { db } from "@/lib/db"
-import { CategoryForm } from "@/components/forms/category-form"
-import { CategoryDeleteButton } from '@/components/category-delete-button';
+import { CategoryForm } from "@/components/dashboard/category/forms/category-form"
+import { CategoryDeleteButton } from '@/components/dashboard/category/category-delete-button';
 import { Icons } from '@/components/icons';
 
 export const metadata = {
@@ -48,8 +48,8 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({ params }) => {
       return (
             <DashboardShell>
                   <DashboardHeader
-                        heading="Categories"
-                        text="Manage categories at one place."
+                        heading="Category"
+                        text="Discover and tweak your category settings with ease."
                   >
                         {params.categoryId !== "new" && (
                               <CategoryDeleteButton

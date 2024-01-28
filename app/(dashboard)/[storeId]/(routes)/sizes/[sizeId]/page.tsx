@@ -4,13 +4,13 @@ import { redirect } from "next/navigation"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
 import { db } from "@/lib/db"
-import { SizeForm } from "@/components/forms/size-form"
-import { SizeDeleteButton } from '@/components/size-delete-button';
+import { SizeForm } from "@/components/dashboard/size/forms/size-form"
+import { SizeDeleteButton } from '@/components/dashboard/size/size-delete-button';
 import { Icons } from '@/components/icons';
 
 export const metadata = {
       title: "Sizes",
-      description: "Manage sizes and sizes settings.",
+      description: "personalize your size preferences",
 }
 
 interface SizePageProps {
@@ -43,7 +43,7 @@ const SizePage: React.FC<SizePageProps> = async ({ params }) => {
             <DashboardShell>
                   <DashboardHeader
                         heading="Sizes"
-                        text="Manage sizes at one place."
+                        text="Size it up! Easily manage and personalize your size preferences here."
                   >
                         {
                               params.sizeId !== "new" && (

@@ -4,8 +4,8 @@ import { DashboardHeader } from "@/components/header"
 import { Icons } from "@/components/icons"
 import { DashboardShell } from "@/components/shell"
 import { Button } from "@/components/ui/button"
-import { SizeDataTable } from "./data-table"
-import { columns } from "./columns"
+import { DataTable } from "@/components/data-table"
+import { columns } from "./table/columns"
 import { Clipboard } from '@/components/clipboard'
 import { useRouter, useParams } from "next/navigation"
 import { useOrigin } from "@/hooks/use-origin"
@@ -24,7 +24,7 @@ export const SizeClient: React.FC<SizeClientProps> = ({ sizes }) => {
             <DashboardShell>
                   <DashboardHeader
                         heading="Sizes"
-                        text="Manage sizes one place."
+                        text="Tailor your sizes effortlessly: Customize and manage size options hassle-free."
                   >
                         <Button
                               onClick={() => router.push(`/${params.storeId}/sizes/new`)}
@@ -34,7 +34,7 @@ export const SizeClient: React.FC<SizeClientProps> = ({ sizes }) => {
                         </Button>
                   </DashboardHeader>
                   <div className="grid gap-10">
-                        <SizeDataTable columns={columns} data={sizes} />
+                        <DataTable columns={columns} data={sizes} filterKey="name" />
                         <div className="grid gap-4">
                               <Clipboard
                                     text={`${origin}/api/${params.storeId}/sizes`}

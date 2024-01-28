@@ -2,12 +2,12 @@
 
 import { auth } from "@clerk/nextjs"
 import { redirect } from "next/navigation"
-import { SizeClient } from "../components/client"
+import { SizeClient } from "../../../../../../components/dashboard/size/client"
 import { db } from "@/lib/db"
 
 export const metadata = {
       title: "Sizes",
-      description: "Manage sizes and sizes settings.",
+      description: " Customize and manage size.",
 }
 
 

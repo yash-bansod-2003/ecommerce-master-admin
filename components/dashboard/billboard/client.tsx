@@ -4,17 +4,17 @@ import { DashboardHeader } from "@/components/header"
 import { Icons } from "@/components/icons"
 import { DashboardShell } from "@/components/shell"
 import { Button } from "@/components/ui/button"
-import { CategoryDataTable } from "./data-table"
-import { columns } from "./columns"
+import { DataTable } from "@/components/data-table"
+import { columns } from "./table/columns"
 import { Clipboard } from '@/components/clipboard'
 import { useRouter, useParams } from "next/navigation"
 import { useOrigin } from "@/hooks/use-origin"
 
-interface CategoryClientProps {
-      categories: Array<any>
+interface BillboardClientProps {
+      billboards: Array<any>
 }
 
-export const CategoryClient: React.FC<CategoryClientProps> = ({ categories }) => {
+export const BillboardClient: React.FC<BillboardClientProps> = ({ billboards: billboards }) => {
       const params = useParams();
       const router = useRouter();
       const { origin } = useOrigin();
@@ -22,39 +22,39 @@ export const CategoryClient: React.FC<CategoryClientProps> = ({ categories }) =>
       return (
             <DashboardShell>
                   <DashboardHeader
-                        heading="Categories"
-                        text="Manage categories and Category at one place."
+                        heading="Billboards"
+                        text="Revolutionize your brand visibility with easy billboard customization."
                   >
                         <Button
-                              onClick={() => router.push(`/${params.storeId}/categories/new`)}
+                              onClick={() => router.push(`/${params.storeId}/billboards/new`)}
                         >
                               <Icons.add className="h-4 w-4 mr-2" />
-                              Add New
+                              Create Billboard
                         </Button>
                   </DashboardHeader>
                   <div className="grid gap-10">
-                        <CategoryDataTable columns={columns} data={categories} />
+                        <DataTable columns={columns} data={billboards} filterKey="label" />
                         <div className="grid gap-4">
                               <Clipboard
-                                    text={`${origin}/api/${params.storeId}/categories`}
+                                    text={`${origin}/api/${params.storeId}/billboards`}
                               />
                               <Clipboard
-                                    text={`${origin}/api/${params.storeId}/categories/{categoryId}`}
+                                    text={`${origin}/api/${params.storeId}/billboards/{billboardId}`}
                               />
                               <Clipboard
                                     badge="admin"
                                     request="POST"
-                                    text={`${origin}/api/${params.storeId}/categories/{categoryId}`}
+                                    text={`${origin}/api/${params.storeId}/billboards/{billboardId}`}
                               />
                               <Clipboard
                                     badge="admin"
                                     request="PATCH"
-                                    text={`${origin}/api/${params.storeId}/categories/{categoryId}`}
+                                    text={`${origin}/api/${params.storeId}/billboards/{billboardId}`}
                               />
                               <Clipboard
                                     badge="admin"
                                     request="DELETE"
-                                    text={`${origin}/api/${params.storeId}/categories/{categoryId}`}
+                                    text={`${origin}/api/${params.storeId}/billboards/{billboardId}`}
                               />
                         </div>
                   </div>

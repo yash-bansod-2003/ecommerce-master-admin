@@ -14,8 +14,8 @@ import {
       TabsTrigger,
 } from "@/components/ui/tabs"
 
-import { Overview } from "@/components/dashboard/overview"
-import { RecentSales } from "@/components/dashboard/recent-sales"
+import { Overview } from "@/components/dashboard/overview/overview"
+import { RecentSales } from "@/components/dashboard/overview/recent-sales"
 import { DashboardHeader } from "@/components/header"
 
 

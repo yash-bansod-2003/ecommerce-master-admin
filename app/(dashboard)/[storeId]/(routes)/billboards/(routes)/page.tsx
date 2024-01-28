@@ -1,12 +1,11 @@
 import { auth } from "@clerk/nextjs"
 import { redirect } from "next/navigation"
-import { BillboardClient } from "../components/client"
-import { BillboardColumn } from "../components/columns"
+import { BillboardClient } from "@/components/dashboard/billboard/client"
 import { db } from "@/lib/db"
 
 export const metadata = {
       title: "Billboards",
-      description: "Manage billboards and billboards settings.",
+      description: "Revolutionize your brand visibility with easy billboard customization.",
 }
 
 

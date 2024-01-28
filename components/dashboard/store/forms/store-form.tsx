@@ -20,7 +20,7 @@ import {
       FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Icons } from "../icons";
+import { Icons } from "../../../icons";
 
 
 const formSchema = z.object({

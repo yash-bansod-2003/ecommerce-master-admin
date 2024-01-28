@@ -28,3 +28,7 @@ export type StoreSelectItem = {
       label: string
       value: string
 }
+
+export type FilterProps = {
+      filterKey: "name" | "email" | "label"
+}
