@@ -51,14 +51,16 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({ params }) => {
                         heading="Categories"
                         text="Manage categories at one place."
                   >
-                        <CategoryDeleteButton
-                              storeId={params.storeId}
-                              categoryId={params.categoryId}
-                              variant="destructive"
-                              size="icon"
-                        >
-                              <Icons.trash />
-                        </CategoryDeleteButton>
+                        {params.categoryId !== "new" && (
+                              <CategoryDeleteButton
+                                    storeId={params.storeId}
+                                    categoryId={params.categoryId}
+                                    variant="destructive"
+                                    size="icon"
+                              >
+                                    <Icons.trash />
+                              </CategoryDeleteButton>
+                        )}
                   </DashboardHeader>
                   <div className="grid gap-10">
                         <CategoryForm
