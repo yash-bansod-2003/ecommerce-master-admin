@@ -53,6 +53,8 @@ const CategoryCellActions: React.FC<CategoryCellActionsProps> = ({ data }) => {
                               <CategoryDeleteButton
                                     storeId={params.storeId}
                                     categoryId={data.id}
+                                    variant="ghost"
+                                    className="w-full"
                               >
                                     <Icons.trash className="h-4 w-4 mr-2" />
                                     Delete

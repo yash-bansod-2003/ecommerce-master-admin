@@ -2,10 +2,8 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import { Store } from "@prisma/client";
 import { toast } from "sonner";
 import { Button, ButtonProps } from "@/components/ui/button";
-import { Icons } from "@/components/icons";
 import { cn } from "@/lib/utils";
 import { useMounted } from "@/hooks/use-mounted";
 
@@ -65,12 +63,13 @@ const BillboardDeleteButton: React.FC<BillboardDeleteButtonProps> = ({ storeId, 
       return (
             <AlertDialog>
                   <AlertDialogTrigger asChild>
-                        <button
-                              className={cn("", className)}
+                        <Button
+                              className={cn("items-start", className)}
                               disabled={isDeleting}
+                              {...props}
                         >
                               {children}
-                        </button>
+                        </Button>
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                         <AlertDialogHeader>

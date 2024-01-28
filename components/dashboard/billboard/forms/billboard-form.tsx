@@ -63,12 +63,12 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({ storeId, billboard
                   })
             }
 
-            const store = await response.json()
+            const billboard = await response.json()
 
             // This forces a cache invalidation.
             router.refresh()
 
-            router.push(`/${store.id}`)
+            router.push(`/${billboard.storeId}`)
 
             return toast.success("Your Billboard was created.", {
                   description: "please check your dashboard for further updates."

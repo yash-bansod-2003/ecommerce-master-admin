@@ -64,7 +64,7 @@ const CategoryDeleteButton: React.FC<CategoryDeleteButtonProps> = ({ storeId, ca
             <AlertDialog>
                   <AlertDialogTrigger asChild>
                         <Button
-                              className={cn("", className)}
+                              className={cn("items-start", className)}
                               disabled={isDeleting}
                               {...props}
                         >

@@ -14,7 +14,7 @@ import {
       DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { SizeColumn } from "./columns"
-import { CategoryDeleteButton } from "@/components/dashboard/category/category-delete-button";
+import { SizeDeleteButton } from "@/components/dashboard/size/size-delete-button";
 
 type SizeCellActionsProps = {
       data: SizeColumn
@@ -50,13 +50,14 @@ const SizeCellActions: React.FC<SizeCellActionsProps> = ({ data }) => {
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem asChild>
-                              <CategoryDeleteButton
+                              <SizeDeleteButton
                                     storeId={params.storeId}
-                                    categoryId={data.id}
+                                    sizeId={data.id}
+                                    variant="ghost"
                               >
                                     <Icons.trash className="h-4 w-4 mr-2" />
                                     Delete
-                              </CategoryDeleteButton>
+                              </SizeDeleteButton>
                         </DropdownMenuItem>
                   </DropdownMenuContent>
             </DropdownMenu>

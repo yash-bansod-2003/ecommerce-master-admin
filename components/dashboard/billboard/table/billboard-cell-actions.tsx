@@ -53,6 +53,8 @@ const BillboardCellActions: React.FC<BillboardCellActionsProps> = ({ data }) => 
                               <BillboardDeleteButton
                                     storeId={params.storeId}
                                     billboardId={data.id}
+                                    variant="ghost"
+                                    className="w-full"
                               >
                                     <Icons.trash className="h-4 w-4 mr-2" />
                                     Delete

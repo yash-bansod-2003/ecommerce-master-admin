@@ -60,12 +60,12 @@ export const SizeForm: React.FC<SizeFormProps> = ({ storeId, size, className, ..
                   })
             }
 
-            const store = await response.json()
+            const size = await response.json()
 
             // This forces a cache invalidation.
             router.refresh()
 
-            router.push(`/${store.id}`)
+            router.push(`/${size.storeId}`)
 
             return toast.success("Your size was created.", {
                   description: "please check your dashboard for further updates."
