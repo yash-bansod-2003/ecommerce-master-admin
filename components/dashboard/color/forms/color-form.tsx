@@ -4,7 +4,7 @@ import * as React from "react";
 import * as z from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { Billboard, Category, Size } from "@prisma/client"
+import { Color } from "@prisma/client"
 import { Button } from "@/components/ui/button"
 import {
       Form,
@@ -19,24 +19,23 @@ import { Input } from "@/components/ui/input"
 import { sizeSchema } from "@/lib/validations/size"
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Icons } from "../../../icons";
+import { Icons } from "@/components/icons";
 
-interface SizeFormProps extends React.HTMLAttributes<HTMLDivElement> {
-      size: Size | null
+type ColorFormProps = {
+      color: Color | null
       storeId: string
 }
 
 
-export const SizeForm: React.FC<SizeFormProps> = ({ storeId, size, className, ...props }) => {
+export const ColorForm: React.FC<ColorFormProps> = ({ storeId, color }) => {
       const router = useRouter()
       const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
-      // 1. Define your form.
       const form = useForm<z.infer<typeof sizeSchema>>({
             resolver: zodResolver(sizeSchema),
             defaultValues: {
-                  name: size?.name || "",
-                  value: size?.value || ""
+                  name: color?.name || "",
+                  value: color?.value || ""
             },
       })
 
@@ -44,7 +43,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({ storeId, size, className, ..
       async function onSubmit(values: z.infer<typeof sizeSchema>) {
             setIsLoading(true)
 
-            const response = await fetch(`/api/${storeId}/sizes`, {
+            const response = await fetch(`/api/${storeId}/colors`, {
                   method: "POST",
                   headers: {
                         "Content-Type": "application/json",
@@ -56,26 +55,26 @@ export const SizeForm: React.FC<SizeFormProps> = ({ storeId, size, className, ..
 
             if (!response?.ok) {
                   return toast.error("Something went wrong.", {
-                        description: "Your size was not created. Please try again."
+                        description: "Your color was not created. Please try again."
                   })
             }
 
-            const size = await response.json()
+            const color = await response.json()
 
             // This forces a cache invalidation.
             router.refresh()
 
-            router.push(`/${size.storeId}/sizes`)
+            router.push(`/${color.storeId}/colors`)
 
-            return toast.success("Your size was created.", {
+            return toast.success("Your color was created.", {
                   description: "please check your dashboard for further updates."
             })
       }
 
       return (
             <Form {...form}>
-                  <form onSubmit={form.handleSubmit(onSubmit)} action="">
-                        <div className="space-y-6" {...props}>
+                  <form onSubmit={form.handleSubmit(onSubmit)} action="" className="space-y-10">
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3">
                               <FormField
                                     control={form.control}
                                     name="name"
@@ -84,13 +83,13 @@ export const SizeForm: React.FC<SizeFormProps> = ({ storeId, size, className, ..
                                                 <FormLabel>Name</FormLabel>
                                                 <FormControl>
                                                       <Input
-                                                            placeholder="Size Name"
+                                                            placeholder="Color Name"
                                                             className="max-w-[400px]"
                                                             {...field}
                                                       />
                                                 </FormControl>
                                                 <FormDescription>
-                                                      This is your size identification name.
+                                                      This is your color identification .
                                                 </FormDescription>
                                                 <FormMessage />
                                           </FormItem>
@@ -102,33 +101,36 @@ export const SizeForm: React.FC<SizeFormProps> = ({ storeId, size, className, ..
                                     render={({ field }) => (
                                           <FormItem>
                                                 <FormLabel>Value</FormLabel>
-                                                <FormControl>
-                                                      <Input
-                                                            placeholder="Category Value"
-                                                            className="max-w-[400px]"
-                                                            {...field}
-                                                      />
-                                                </FormControl>
+                                                <div className="flex gap-4 items-center">
+                                                      <FormControl>
+                                                            <Input
+                                                                  placeholder="Color Value"
+                                                                  className="max-w-[400px]"
+                                                                  {...field}
+                                                            />
+                                                      </FormControl>
+                                                      <div className="h-8 w-8 rounded-full border" style={{ background: field.value }} />
+                                                </div>
                                                 <FormDescription>
-                                                      This is your size value.
+                                                      This is your color value.
                                                 </FormDescription>
                                                 <FormMessage />
                                           </FormItem>
                                     )}
                               />
-                              <Button
-                                    disabled={isLoading}
-                                    type="submit"
-                                    className="w-fit"
-                              >
-                                    {isLoading ? (
-                                          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                                    ) : (
-                                          <Icons.add className="mr-2 h-4 w-4" />
-                                    )}
-                                    Save Changes
-                              </Button>
                         </div>
+                        <Button
+                              disabled={isLoading}
+                              type="submit"
+                              className="w-fit"
+                        >
+                              {isLoading ? (
+                                    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                              ) : (
+                                    <Icons.add className="mr-2 h-4 w-4" />
+                              )}
+                              Save Changes
+                        </Button>
                   </form>
             </Form>
       )

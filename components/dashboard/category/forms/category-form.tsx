@@ -73,7 +73,7 @@ export const CategoryForm: React.FC<BillboardFormProps> = ({ storeId, category, 
             // This forces a cache invalidation.
             router.refresh()
 
-            router.push(`/${category.storeId}`)
+            router.push(`/${category.storeId}/categories`)
 
             return toast.success("Your category was created.", {
                   description: "please check your dashboard for further updates."

@@ -24,18 +24,6 @@ model Store {
   @@map("stores")
 }
 
-model Color {
-  id        String   @id @default(cuid())
-  name      String
-  userId    String
-  storeId   String
-  store     Store    @relation(fields: [storeId], references: [id])
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  updatedAt DateTime @default(now()) @map(name: "updated_at")
-
-  @@map("colors")
-}
-
 model Billboard {
   id         String     @id @default(cuid())
   label      String
@@ -75,4 +63,17 @@ model Size {
   updatedAt DateTime @default(now()) @map(name: "updated_at")
 
   @@map("sizes")
+}
+
+model Color {
+  id        String   @id @default(cuid())
+  name      String
+  value     String
+  userId    String
+  storeId   String
+  store     Store    @relation(fields: [storeId], references: [id])
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @default(now()) @map(name: "updated_at")
+
+  @@map("colors")
 }
