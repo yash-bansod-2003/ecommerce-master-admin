@@ -1,4 +1,3 @@
-import { ObjectId } from 'mongodb';
 import { auth } from "@clerk/nextjs"
 import { redirect } from "next/navigation"
 import { DashboardHeader } from "@/components/header"
@@ -29,12 +28,10 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({ params }) => {
             return redirect("/sign-in")
       }
 
-      // temporary fix of mongodb hex string error
-      const dummyObjectId = new ObjectId();
 
       const category = await db.category.findUnique({
             where: {
-                  id: params.categoryId === "new" ? dummyObjectId : params.categoryId,
+                  id: params.categoryId,
             }
       });
 

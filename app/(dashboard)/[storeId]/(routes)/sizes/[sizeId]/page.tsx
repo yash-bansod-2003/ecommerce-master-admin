@@ -1,4 +1,3 @@
-import { ObjectId } from 'mongodb';
 import { auth } from "@clerk/nextjs"
 import { redirect } from "next/navigation"
 import { DashboardHeader } from "@/components/header"
@@ -29,12 +28,10 @@ const SizePage: React.FC<SizePageProps> = async ({ params }) => {
             return redirect("/sign-in")
       }
 
-      // temporary fix of mongodb hex string error
-      const dummyObjectId = new ObjectId();
 
       const size = await db.size.findUnique({
             where: {
-                  id: params.sizeId === "new" ? dummyObjectId : params.sizeId,
+                  id: params.sizeId,
             }
       });
 

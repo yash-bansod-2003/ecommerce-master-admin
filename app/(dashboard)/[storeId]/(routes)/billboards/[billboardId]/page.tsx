@@ -1,4 +1,3 @@
-import { ObjectId } from 'mongodb';
 import { auth } from "@clerk/nextjs"
 import { redirect } from "next/navigation"
 import { DashboardHeader } from "@/components/header"
@@ -27,12 +26,9 @@ const BillboardsPage: React.FC<BillboardPageProps> = async ({ params }) => {
             return redirect("/sign-in")
       }
 
-      // temporary fix of mongodb hex string error
-      const dummyObjectId = new ObjectId();
-
       const billboard = await db.billboard.findUnique({
             where: {
-                  id: params.billboardId === "new" ? dummyObjectId : params.billboardId,
+                  id: params.billboardId
             }
       });
 
