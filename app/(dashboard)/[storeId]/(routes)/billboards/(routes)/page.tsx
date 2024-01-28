@@ -30,7 +30,7 @@ const BillboardsPage: React.FC<BillboardsPageProps> = async ({ params }) => {
             }
       });
 
-      return <BillboardClient billbaords={billboards} />
+      return <BillboardClient billboards={billboards} />
 }
 
 export default BillboardsPage;

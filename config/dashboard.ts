@@ -8,6 +8,11 @@ export const dashboardConfig: DashboardConfig = {
                   icon: "product",
             },
             {
+                  title: "Categories",
+                  href: "/dashboard/categories",
+                  icon: "product",
+            },
+            {
                   title: "Products",
                   href: "/dashboard/products",
                   icon: "product",

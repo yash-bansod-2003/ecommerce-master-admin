@@ -31,6 +31,7 @@ import {
       MoreHorizontal,
       Pencil,
       Trash2,
+      Server,
 } from "lucide-react"
 
 export type Icon = LucideIcon
@@ -85,6 +86,7 @@ export const Icons = {
       copyCheck: CopyCheck,
       more: MoreHorizontal,
       edit: Pencil,
+      server: Server,
       noData: ({ ...props }: LucideProps) => (
             <svg
                   xmlns="http://www.w3.org/2000/svg"
