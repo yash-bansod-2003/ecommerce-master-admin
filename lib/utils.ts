@@ -14,3 +14,8 @@ export function storesMapper(stores: Store[]): Array<StoreSelectItem> {
   };
   return stores.reduce(mapper, []);
 }
+
+export const formatter = new Intl.NumberFormat("en-US", {
+  style: 'currency',
+  currency: 'INR',
+});

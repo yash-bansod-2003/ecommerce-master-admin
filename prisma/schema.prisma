@@ -20,6 +20,7 @@ model Store {
   categories Category[]
   colors     Color[]
   sizes      Size[]
+  products   Product[]
 
   @@map("stores")
 }
@@ -46,6 +47,7 @@ model Category {
   store       Store     @relation(fields: [storeId], references: [id])
   billboardId String
   billboard   Billboard @relation(fields: [billboardId], references: [id])
+  products    Product[]
   createdAt   DateTime  @default(now()) @map(name: "created_at")
   updatedAt   DateTime  @default(now()) @map(name: "updated_at")
 
@@ -53,27 +55,51 @@ model Category {
 }
 
 model Size {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   name      String
   value     String
   userId    String
   storeId   String
-  store     Store    @relation(fields: [storeId], references: [id])
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  updatedAt DateTime @default(now()) @map(name: "updated_at")
+  store     Store     @relation(fields: [storeId], references: [id])
+  createdAt DateTime  @default(now()) @map(name: "created_at")
+  updatedAt DateTime  @default(now()) @map(name: "updated_at")
+  products  Product[]
 
   @@map("sizes")
 }
 
 model Color {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   name      String
   value     String
   userId    String
   storeId   String
-  store     Store    @relation(fields: [storeId], references: [id])
-  createdAt DateTime @default(now()) @map(name: "created_at")
-  updatedAt DateTime @default(now()) @map(name: "updated_at")
+  store     Store     @relation(fields: [storeId], references: [id])
+  products  Product[]
+  createdAt DateTime  @default(now()) @map(name: "created_at")
+  updatedAt DateTime  @default(now()) @map(name: "updated_at")
 
   @@map("colors")
+}
+
+model Product {
+  id         String   @id @default(cuid())
+  name       String
+  price      Decimal
+  isFeatured Boolean  @default(false)
+  isArchived Boolean  @default(false)
+  image      String
+  userId     String
+  storeId    String
+  store      Store    @relation(fields: [storeId], references: [id])
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+  sizeId     String
+  size       Size     @relation(fields: [sizeId], references: [id])
+  colorId    String
+  color      Color    @relation(fields: [colorId], references: [id])
+  createdAt  DateTime @default(now()) @map(name: "created_at")
+  updatedAt  DateTime @default(now()) @map(name: "updated_at")
+
+  @@map("products")
 }

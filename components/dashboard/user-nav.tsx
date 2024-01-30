@@ -1,4 +1,9 @@
-import { currentUser } from "@clerk/nextjs";
+"use client"
+
+import { useSession } from "@clerk/nextjs";
+import { useClerk } from "@clerk/clerk-react";
+import { useRouter, redirect } from 'next/navigation'
+import { useMounted } from "@/hooks/use-mounted";
 
 import {
       Avatar,
@@ -16,22 +21,31 @@ import {
       DropdownMenuShortcut,
       DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { redirect } from "next/navigation";
 
-export async function UserNav() {
-      const user = await currentUser();
 
-      if (!user) {
-            redirect("/sign-in")
+
+export function UserNav() {
+      const { isMounted } = useMounted()
+      const router = useRouter();
+      const { session } = useSession()
+      const { signOut } = useClerk();
+
+      if (!session) {
+            return redirect("/sign-in")
       }
 
-      const nameInitials = `${user?.firstName?.charAt(0)} ${user?.lastName?.charAt(0)}`
+      if (!isMounted) {
+            return null
+      }
+
+
+      const nameInitials = `${session.user.firstName?.charAt(0)} ${session.user.lastName?.charAt(0)}`
       return (
             <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
                               <Avatar className="h-8 w-8">
-                                    <AvatarImage src={user?.imageUrl} alt="@shadcn" />
+                                    <AvatarImage src={session.user?.imageUrl} alt="@shadcn" />
                                     <AvatarFallback>{nameInitials}</AvatarFallback>
                               </Avatar>
                         </Button>
@@ -39,9 +53,9 @@ export async function UserNav() {
                   <DropdownMenuContent className="w-56" align="end" forceMount>
                         <DropdownMenuLabel className="font-normal">
                               <div className="flex flex-col space-y-1">
-                                    <p className="text-sm font-medium leading-none">{`${user?.firstName} ${user?.lastName}`}</p>
+                                    <p className="text-sm font-medium leading-none">{`${session.user?.firstName} ${session.user?.lastName}`}</p>
                                     <p className="text-xs leading-none text-muted-foreground">
-                                          {user.emailAddresses[0].emailAddress}
+                                          {session.user.emailAddresses[0].emailAddress}
                                     </p>
                               </div>
                         </DropdownMenuLabel>
@@ -62,11 +76,11 @@ export async function UserNav() {
                               <DropdownMenuItem>New Team</DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                              Log out
+                        <DropdownMenuItem onClick={() => signOut(() => router.push("/"))} >
+                              Log Out
                               <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
                         </DropdownMenuItem>
                   </DropdownMenuContent>
-            </DropdownMenu>
+            </DropdownMenu >
       )
 }

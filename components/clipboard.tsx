@@ -1,27 +1,32 @@
 "use client";
 
 import * as React from "react";
-import { Card, CardContent, CardHeader } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
+
 import { cn } from "@/lib/utils"
+import { useOrigin } from "@/hooks/use-origin";
+import { Icons } from "@/components/icons";
+
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 import { useCopyToClipboard } from "@/hooks/use-copy";
-import { Icons } from "./icons";
+import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 
 
-interface ClipboardProps extends React.ButtonHTMLAttributes<HTMLDivElement> {
+interface ClipboardProps extends React.HTMLAttributes<HTMLDivElement> {
       text: string;
       badge?: "admin" | "public"
       request?: "GET" | "POST" | "DELETE" | "PATCH"
+      origin?: boolean
 }
 
-export const Clipboard: React.FC<ClipboardProps> = ({ className, text, badge = "public", request = "GET", ...props }) => {
+export const Clipboard: React.FC<ClipboardProps> = ({ className, text, badge = "public", request = "GET", origin = true, ...props }) => {
+      const { origin: appOrigin } = useOrigin()
       const [copiedText, copy] = useCopyToClipboard();
       const [copied, setCopied] = React.useState<boolean>(false);
 
       return (
-            <Card className={cn("border rounded-md p-0", className)}>
+            <Card className={cn("border rounded-md p-0", className)} {...props}>
                   <CardHeader className="border-b flex flex-row items-center justify-between py-1">
                         <div className="flex items-center gap-4">
                               <div className="flex items-center">
@@ -53,7 +58,7 @@ export const Clipboard: React.FC<ClipboardProps> = ({ className, text, badge = "
                               type="email"
                               placeholder="Email"
                               disabled
-                              value={text}
+                              value={origin ? `${appOrigin}${text}` : text}
                         />
                   </CardContent>
             </Card>
