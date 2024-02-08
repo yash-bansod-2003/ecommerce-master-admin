@@ -32,6 +32,7 @@ import {
     Pencil,
     Trash2,
     Server,
+    Receipt,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -102,6 +103,7 @@ export const Icons = {
     more: MoreHorizontal,
     edit: Pencil,
     server: Server,
+    order: Receipt,
     noData: ({ ...props }: LucideProps) => (
         <svg
             xmlns="http://www.w3.org/2000/svg"

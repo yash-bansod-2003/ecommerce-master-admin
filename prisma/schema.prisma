@@ -118,8 +118,8 @@ model Order {
   storeId    String
   store      Store       @relation(fields: [storeId], references: [id])
   isPaid     Boolean     @default(false)
-  phone      String?
-  address    String?
+  phone      String      @default("")
+  address    String      @default("")
   orderItems OrderItem[]
   createdAt  DateTime    @default(now()) @map(name: "created_at")
   updatedAt  DateTime    @default(now()) @map(name: "updated_at")
