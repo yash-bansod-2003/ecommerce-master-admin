@@ -18,6 +18,7 @@ model Store {
   colors     Color[]
   sizes      Size[]
   products   Product[]
+  orders     Order[]
 
   @@map("stores")
 }
@@ -80,23 +81,48 @@ model Color {
 }
 
 model Product {
-  id         String   @id @default(cuid())
+  id         String      @id @default(cuid())
   name       String
   price      Decimal
-  isFeatured Boolean  @default(false)
-  isArchived Boolean  @default(false)
+  isFeatured Boolean     @default(false)
+  isArchived Boolean     @default(false)
   image      String
   userId     String
   storeId    String
-  store      Store    @relation(fields: [storeId], references: [id])
+  store      Store       @relation(fields: [storeId], references: [id])
   categoryId String
-  category   Category @relation(fields: [categoryId], references: [id])
+  category   Category    @relation(fields: [categoryId], references: [id])
   sizeId     String
-  size       Size     @relation(fields: [sizeId], references: [id])
+  size       Size        @relation(fields: [sizeId], references: [id])
   colorId    String
-  color      Color    @relation(fields: [colorId], references: [id])
-  createdAt  DateTime @default(now()) @map(name: "created_at")
-  updatedAt  DateTime @default(now()) @map(name: "updated_at")
+  color      Color       @relation(fields: [colorId], references: [id])
+  orderItem  OrderItem[]
+  createdAt  DateTime    @default(now()) @map(name: "created_at")
+  updatedAt  DateTime    @default(now()) @map(name: "updated_at")
 
   @@map("products")
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@map("order_items")
+}
+
+model Order {
+  id         String      @id @default(cuid())
+  storeId    String
+  store      Store       @relation(fields: [storeId], references: [id])
+  isPaid     Boolean     @default(false)
+  phone      String?
+  address    String?
+  orderItems OrderItem[]
+  createdAt  DateTime    @default(now()) @map(name: "created_at")
+  updatedAt  DateTime    @default(now()) @map(name: "updated_at")
+
+  @@map("orders")
 }
