@@ -1,34 +1,32 @@
-import type { Icon } from "lucide-react"
+import type { Icon } from "lucide-react";
 
-import { Icons } from "@/components/icons"
+import { Icons } from "@/components/icons";
 
 export type MainNavItem = {
-      title: string
-      disabled?: boolean
-      external?: boolean
-      icon?: keyof typeof Icons
+    title: string;
+    disabled?: boolean;
+    external?: boolean;
+    icon?: keyof typeof Icons;
 } & (
-            | {
-                  href: string
-                  items?: never
-            }
-            | {
-                  href?: string
-                  items: NavLink[]
-            }
-      )
-
+    | {
+          href: string;
+          items?: never;
+      }
+    | {
+          href?: string;
+          items: NavLink[];
+      }
+);
 
 export type DashboardConfig = {
-      mainNav: MainNavItem[]
-}
-
+    mainNav: MainNavItem[];
+};
 
 export type StoreSelectItem = {
-      label: string
-      value: string
-}
+    label: string;
+    value: string;
+};
 
 export type FilterProps = {
-      filterKey: "name" | "email" | "label"
-}
+    filterKey: "name" | "email" | "label";
+};

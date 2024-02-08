@@ -1,12 +1,7 @@
-
-type StoreLayoutProps = React.PropsWithChildren
+type StoreLayoutProps = React.PropsWithChildren;
 
 const StoreLayout: React.FC<StoreLayoutProps> = ({ children }) => {
-      return (
-            <>
-                  {children}
-            </>
-      )
-}
+    return <>{children}</>;
+};
 
 export default StoreLayout;

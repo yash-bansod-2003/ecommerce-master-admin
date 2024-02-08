@@ -1,35 +1,33 @@
-import { auth } from "@clerk/nextjs"
-import { redirect } from "next/navigation"
-import { ColorClient } from "../_components/client"
-import { db } from "@/lib/db"
+import { auth } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
+import { ColorClient } from "../_components/client";
+import { db } from "@/lib/db";
 
 export const metadata = {
-      title: "Colors",
-      description: "Manage ans Customize colors.",
-}
-
+    title: "Colors",
+    description: "Manage ans Customize colors.",
+};
 
 interface ColorsPageProps {
-      params: {
-            storeId: string
-      }
+    params: {
+        storeId: string;
+    };
 }
 
 const ColorsPage: React.FC<ColorsPageProps> = async ({ params }) => {
+    const { userId } = auth();
 
-      const { userId } = auth()
+    if (!userId) {
+        return redirect("/sign-in");
+    }
 
-      if (!userId) {
-            return redirect("/sign-in")
-      }
+    const colors = await db.color.findMany({
+        where: {
+            storeId: params.storeId,
+        },
+    });
 
-      const colors = await db.color.findMany({
-            where: {
-                  storeId: params.storeId
-            }
-      });
-
-      return <ColorClient colors={colors} />
-}
+    return <ColorClient colors={colors} />;
+};
 
 export default ColorsPage;
