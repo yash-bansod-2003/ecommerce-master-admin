@@ -25,7 +25,7 @@ export async function GET(
             },
         });
 
-        return NextResponse.json({ ...dbStore }, { status: 200 });
+        return NextResponse.json(dbStore, { status: 200 });
     } catch (error) {
         return new NextResponse(null, { status: 500 });
     }

@@ -29,7 +29,7 @@ export async function POST(req: Request) {
             },
         });
 
-        return NextResponse.json({ ...dbStore }, { status: 201 });
+        return NextResponse.json(dbStore, { status: 201 });
     } catch (error) {
         if (error instanceof z.ZodError) {
             return new NextResponse(JSON.stringify(error.issues), {
@@ -46,7 +46,7 @@ export async function GET(req: Request) {
         // Obtain the stores.
         const dbStores = await db.store.findMany();
 
-        return NextResponse.json({ ...dbStores }, { status: 201 });
+        return NextResponse.json(dbStores, { status: 201 });
     } catch (error) {
         return new NextResponse(null, { status: 500 });
     }

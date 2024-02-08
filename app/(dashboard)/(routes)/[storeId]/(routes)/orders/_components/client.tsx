@@ -32,14 +32,6 @@ const OrdersClient: React.FC<OrdersClientProps> = ({
                 <DataTable columns={columns} data={orders} filterKey="name" />
                 <div className="grid gap-4">
                     <Clipboard text={`/api/${params.storeId}/orders`} />
-                    <Clipboard
-                        text={`/api/${params.storeId}/products/{orderId}`}
-                    />
-                    <Clipboard
-                        badge="admin"
-                        request="DELETE"
-                        text={`/api/${params.storeId}/products/{orderId}`}
-                    />
                 </div>
             </div>
         </DashboardShell>

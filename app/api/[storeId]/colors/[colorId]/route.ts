@@ -27,7 +27,7 @@ export async function GET(
             },
         });
 
-        return NextResponse.json({ ...dbColor }, { status: 200 });
+        return NextResponse.json(dbColor, { status: 200 });
     } catch (error) {
         return new NextResponse(null, { status: 500 });
     }

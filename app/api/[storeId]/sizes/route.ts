@@ -40,7 +40,7 @@ export async function POST(
             },
         });
 
-        return NextResponse.json({ ...dbSize }, { status: 201 });
+        return NextResponse.json(dbSize, { status: 201 });
     } catch (error) {
         if (error instanceof z.ZodError) {
             return new NextResponse(JSON.stringify(error.issues), {
@@ -67,7 +67,7 @@ export async function GET(
             },
         });
 
-        return NextResponse.json({ ...dbSizes }, { status: 200 });
+        return NextResponse.json(dbSizes, { status: 200 });
     } catch (error) {
         return new NextResponse(JSON.stringify(error), { status: 500 });
     }
