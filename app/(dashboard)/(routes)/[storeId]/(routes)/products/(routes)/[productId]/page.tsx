@@ -32,11 +32,29 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
         },
     });
 
+    const categories = await db.category.findMany({
+        where: {
+            storeId: params.storeId,
+        },
+    });
+
+    const sizes = await db.size.findMany({
+        where: {
+            storeId: params.storeId,
+        },
+    });
+
+    const colors = await db.color.findMany({
+        where: {
+            storeId: params.storeId,
+        },
+    });
+
     return (
         <DashboardShell>
             <DashboardHeader
-                heading="Colors"
-                text="Color your world: Effortlessly customize and manage your color choices here."
+                heading="Product"
+                text="Create and manage Product."
             >
                 {params.productId !== "new" && (
                     <ProductDeleteButton
@@ -50,7 +68,13 @@ const ProductPage: React.FC<ProductPageProps> = async ({ params }) => {
                 )}
             </DashboardHeader>
             <div className="grid gap-10">
-                <ProductForm product={product} storeId={params.storeId} />
+                <ProductForm
+                    product={product}
+                    storeId={params.storeId}
+                    categories={categories}
+                    sizes={sizes}
+                    colors={colors}
+                />
             </div>
         </DashboardShell>
     );

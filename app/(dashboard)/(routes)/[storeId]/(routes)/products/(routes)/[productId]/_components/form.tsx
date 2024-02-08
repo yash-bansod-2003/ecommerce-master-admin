@@ -4,7 +4,7 @@ import * as React from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Product } from "@prisma/client";
+import { Category, Color, Product, Size } from "@prisma/client";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -22,15 +22,28 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Icons } from "@/components/icons";
 import { FileUpload } from "@/components/file-upload";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
 
 interface ProductFormProps extends React.HTMLAttributes<HTMLDivElement> {
     product: Product | null;
     storeId: string;
+    categories: Category[];
+    sizes: Size[];
+    colors: Color[];
 }
 
 export const ProductForm: React.FC<ProductFormProps> = ({
     storeId,
     product,
+    categories,
+    sizes,
+    colors,
     className,
     ...props
 }) => {
@@ -55,7 +68,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
     async function onSubmit(values: z.infer<typeof productSchema>) {
         setIsLoading(true);
 
-        const response = await fetch(`/api/${storeId}/billboards`, {
+        const response = await fetch(`/api/${storeId}/products`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -67,19 +80,18 @@ export const ProductForm: React.FC<ProductFormProps> = ({
 
         if (!response?.ok) {
             return toast.error("Something went wrong.", {
-                description:
-                    "Your billboard was not created. Please try again.",
+                description: "Your product was not created. Please try again.",
             });
         }
 
-        const billboard = await response.json();
+        const product = await response.json();
 
         // This forces a cache invalidation.
         router.refresh();
 
-        router.push(`/${billboard.storeId}/billboards`);
+        router.push(`/${product.storeId}/products`);
 
-        return toast.success("Your Billboard was created.", {
+        return toast.success("Your Product was created.", {
             description: "please check your dashboard for further updates.",
         });
     }
@@ -102,13 +114,13 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                                     />
                                 </FormControl>
                                 <FormDescription>
-                                    This is your billboard display image.
+                                    This is your product display image.
                                 </FormDescription>
                                 <FormMessage />
                             </FormItem>
                         )}
                     />
-                    <div className="grid grid-cols-3">
+                    <div className="grid grid-cols-3 gap-8">
                         <FormField
                             control={form.control}
                             name="name"
@@ -132,20 +144,118 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                         />
                         <FormField
                             control={form.control}
-                            name="name"
+                            name="price"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Name</FormLabel>
+                                    <FormLabel>Price</FormLabel>
                                     <FormControl>
                                         <Input
-                                            placeholder="Product Name"
+                                            placeholder="Product Price"
                                             className="max-w-[400px]"
                                             {...field}
                                         />
                                     </FormControl>
                                     <FormDescription>
-                                        This is your product identification
-                                        name.
+                                        This is your product selling price.
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="categoryId"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Category</FormLabel>
+                                    <Select
+                                        onValueChange={field.onChange}
+                                        defaultValue={field.value}
+                                    >
+                                        <FormControl className="w-[400px]">
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select a category" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            {categories.map((category) => (
+                                                <SelectItem
+                                                    key={category.id}
+                                                    value={category.id}
+                                                >
+                                                    {category.name}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                    <FormDescription>
+                                        This is your product Category.
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="sizeId"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Size</FormLabel>
+                                    <Select
+                                        onValueChange={field.onChange}
+                                        defaultValue={field.value}
+                                    >
+                                        <FormControl className="w-[400px]">
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select a size" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            {sizes.map((size) => (
+                                                <SelectItem
+                                                    key={size.id}
+                                                    value={size.id}
+                                                >
+                                                    {size.name}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                    <FormDescription>
+                                        This is your product Size.
+                                    </FormDescription>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="colorId"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Color</FormLabel>
+                                    <Select
+                                        onValueChange={field.onChange}
+                                        defaultValue={field.value}
+                                    >
+                                        <FormControl className="w-[400px]">
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select a color" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            {colors.map((color) => (
+                                                <SelectItem
+                                                    key={color.id}
+                                                    value={color.id}
+                                                >
+                                                    {color.name}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                    <FormDescription>
+                                        This is your product Color.
                                     </FormDescription>
                                     <FormMessage />
                                 </FormItem>

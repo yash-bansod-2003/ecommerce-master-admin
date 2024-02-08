@@ -30,9 +30,9 @@ const FileUpload: React.FC<FileUploadProps> = ({
                         className="object-cover"
                     />
                     <Button
-                        variant="ghost"
+                        variant="destructive"
                         size="icon"
-                        className="absolute right-0 top-0"
+                        className="absolute right-1 top-1"
                         onClick={() => onChange(null)}
                     >
                         <Icons.close />
