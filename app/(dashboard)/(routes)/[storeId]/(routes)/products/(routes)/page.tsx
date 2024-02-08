@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { format } from "date-fns";
 import { ProductsClient } from "../_components/client";
@@ -19,9 +19,9 @@ interface ProductsPageProps {
 }
 
 const ProductsPage: React.FC<ProductsPageProps> = async ({ params }) => {
-    const { userId } = auth();
+    const user = await currentUser();
 
-    if (!userId) {
+    if (!user) {
         return redirect("/sign-in");
     }
 

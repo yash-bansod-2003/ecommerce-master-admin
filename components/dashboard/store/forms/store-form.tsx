@@ -95,16 +95,20 @@ export const StoreForm: React.FC<StoreFormProps> = ({ onClose }) => {
                     )}
                 />
                 <DialogFooter>
-                    <Button onClick={() => onClose()} disabled={isLoading}>
+                    <Button
+                        variant="destructive"
+                        onClick={() => onClose()}
+                        disabled={isLoading}
+                    >
                         Close
                     </Button>
                     <Button disabled={isLoading} type="submit">
-                        {isLoading ? (
-                            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                        ) : (
-                            <Icons.add className="mr-2 h-4 w-4" />
-                        )}
                         Create Store
+                        {isLoading ? (
+                            <Icons.spinner className="ml-2 h-4 w-4 animate-spin" />
+                        ) : (
+                            <Icons.store className="ml-2 h-4 w-4" />
+                        )}
                     </Button>
                 </DialogFooter>
             </form>

@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { ColorClient } from "../_components/client";
 import { db } from "@/lib/db";
@@ -15,9 +15,9 @@ interface ColorsPageProps {
 }
 
 const ColorsPage: React.FC<ColorsPageProps> = async ({ params }) => {
-    const { userId } = auth();
+    const user = currentUser();
 
-    if (!userId) {
+    if (!user) {
         return redirect("/sign-in");
     }
 

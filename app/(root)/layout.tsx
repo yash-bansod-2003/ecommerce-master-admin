@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs";
+import { auth, currentUser } from "@clerk/nextjs";
 import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 
@@ -7,20 +7,21 @@ interface RootLayoutProps {
 }
 
 export default async function RootLayout({ children }: RootLayoutProps) {
-    const { userId } = auth();
+    const isAuthenticated = auth();
+    const user = await currentUser();
 
-    if (!userId) {
-        redirect("/sign-in");
+    if (!isAuthenticated) {
+        return redirect("/sign-in");
     }
 
     const dbStore = await db.store.findFirst({
         where: {
-            userId,
+            userId: user?.id,
         },
     });
 
     if (dbStore) {
-        redirect(`/${dbStore.id}`);
+        return redirect(`/${dbStore.id}`);
     }
 
     return <div>{children}</div>;

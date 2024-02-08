@@ -51,7 +51,7 @@ export const Clipboard: React.FC<ClipboardProps> = ({
                     size="icon"
                     onMouseLeave={() => setCopied(false)}
                     onClick={() => {
-                        copy(text);
+                        copy(origin ? `${appOrigin}${text}` : text);
                         setCopied(true);
                     }}
                 >

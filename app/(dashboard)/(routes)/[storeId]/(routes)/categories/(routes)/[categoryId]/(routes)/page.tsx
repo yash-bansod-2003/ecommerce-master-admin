@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { DashboardHeader } from "@/components/header";
 import { DashboardShell } from "@/components/shell";
@@ -20,9 +20,9 @@ interface CategoryPageProps {
 }
 
 const CategoryPage: React.FC<CategoryPageProps> = async ({ params }) => {
-    const { userId } = auth();
+    const user = await currentUser();
 
-    if (!userId) {
+    if (!user) {
         return redirect("/sign-in");
     }
 
@@ -34,7 +34,7 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({ params }) => {
 
     const billboards = await db.billboard.findMany({
         where: {
-            userId,
+            userId: user.id,
             storeId: params.storeId,
         },
     });

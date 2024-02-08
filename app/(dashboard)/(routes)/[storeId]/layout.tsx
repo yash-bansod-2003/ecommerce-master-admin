@@ -3,7 +3,7 @@ import { MainNav } from "@/components/dashboard/main-nav";
 import { StoreSwitcher } from "@/components/dashboard/store/store-switcher";
 import { UserNav } from "@/components/dashboard/user-nav";
 import { db } from "@/lib/db";
-import { auth } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { storesMapper } from "@/lib/utils";
 import { ModeToggle } from "@/components/mode-toggle";
@@ -17,16 +17,16 @@ export default async function DashboardLayout({
     children,
     params,
 }: DashboardLayoutProps) {
-    const { userId } = auth();
+    const user = await currentUser();
 
-    if (!userId) {
+    if (!user) {
         redirect("/sign-in");
     }
 
     const dbStore = await db.store.findFirst({
         where: {
             id: params.storeId,
-            userId,
+            userId: user.id,
         },
     });
 
@@ -36,7 +36,7 @@ export default async function DashboardLayout({
 
     const dbStores = await db.store.findMany({
         where: {
-            userId,
+            userId: user.id,
         },
     });
 

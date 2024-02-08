@@ -1,13 +1,14 @@
-import { auth, currentUser } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 type DashboardLayoutProps = React.PropsWithChildren;
 
-const DashboardLayout: React.FC<DashboardLayoutProps> = ({ children }) => {
-    const isAuth = auth();
-    const user = currentUser();
+const DashboardLayout: React.FC<DashboardLayoutProps> = async ({
+    children,
+}) => {
+    const isAuthenticated = auth();
 
-    if (!isAuth || !user) {
+    if (!isAuthenticated) {
         return redirect("/sign-in");
     }
 

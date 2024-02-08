@@ -105,8 +105,8 @@ export const Icons = {
     noData: ({ ...props }: LucideProps) => (
         <svg
             xmlns="http://www.w3.org/2000/svg"
-            width="184"
-            height="152"
+            width="160"
+            height="140"
             viewBox="0 0 184 152"
             {...props}
         >

@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { DashboardHeader } from "@/components/header";
 import { DashboardShell } from "@/components/shell";
@@ -20,16 +20,16 @@ interface SettingsPageProps {
 }
 
 const SettingsPage: React.FC<SettingsPageProps> = async ({ params }) => {
-    const { userId } = auth();
+    const user = await currentUser();
 
-    if (!userId) {
+    if (!user) {
         return redirect("/sign-in");
     }
 
     const store = await db.store.findFirst({
         where: {
             id: params.storeId,
-            userId,
+            userId: user.id,
         },
     });
 

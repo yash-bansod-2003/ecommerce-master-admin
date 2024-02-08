@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { SizeClient } from "../_components/client";
 import { db } from "@/lib/db";
@@ -15,9 +15,9 @@ interface SizesPageProps {
 }
 
 const SizesPage: React.FC<SizesPageProps> = async ({ params }) => {
-    const { userId } = auth();
+    const user = await currentUser();
 
-    if (!userId) {
+    if (!user) {
         return redirect("/sign-in");
     }
 
