@@ -52,7 +52,7 @@ export async function PATCH(
         const payload = sizeEditSchema.parse(body);
 
         // Update the billboard.
-        await db.size.update({
+        const dbUpdatedSize = await db.size.update({
             where: {
                 id: params.sizeId,
                 storeId: params.storeId,
@@ -64,7 +64,7 @@ export async function PATCH(
             },
         });
 
-        return new NextResponse(null, { status: 200 });
+        return NextResponse.json(dbUpdatedSize, { status: 200 });
     } catch (error) {
         if (error instanceof z.ZodError) {
             return new NextResponse(JSON.stringify(error.issues), {

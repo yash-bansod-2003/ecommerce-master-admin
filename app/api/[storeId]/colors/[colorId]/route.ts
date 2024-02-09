@@ -51,8 +51,8 @@ export async function PATCH(
         const body = await req.json();
         const payload = sizeEditSchema.parse(body);
 
-        // Update the billboard.
-        await db.color.update({
+        // Update the Color.
+        const dbUpdatedColor = await db.color.update({
             where: {
                 id: params.colorId,
                 storeId: params.storeId,
@@ -64,7 +64,7 @@ export async function PATCH(
             },
         });
 
-        return new NextResponse(null, { status: 200 });
+        return NextResponse.json(dbUpdatedColor, { status: 200 });
     } catch (error) {
         if (error instanceof z.ZodError) {
             return new NextResponse(JSON.stringify(error.issues), {

@@ -51,8 +51,8 @@ export async function PATCH(
         const body = await req.json();
         const payload = categoryEditSchema.parse(body);
 
-        // Update the billboard.
-        await db.category.update({
+        // Update the Category.
+        const dbUpdatedCategory = await db.category.update({
             where: {
                 id: params.categoryId,
                 storeId: params.storeId,
@@ -64,7 +64,7 @@ export async function PATCH(
             },
         });
 
-        return new NextResponse(null, { status: 200 });
+        return NextResponse.json(dbUpdatedCategory, { status: 200 });
     } catch (error) {
         if (error instanceof z.ZodError) {
             return new NextResponse(JSON.stringify(error.issues), {

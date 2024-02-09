@@ -52,7 +52,7 @@ export async function PATCH(
         const payload = productEditSchema.parse(body);
 
         // Update the product.
-        await db.product.update({
+        const dbUpdatedProduct = await db.product.update({
             where: {
                 id: params.productId,
                 storeId: params.storeId,
@@ -70,7 +70,7 @@ export async function PATCH(
             },
         });
 
-        return new NextResponse(null, { status: 200 });
+        return NextResponse.json(dbUpdatedProduct, { status: 200 });
     } catch (error) {
         if (error instanceof z.ZodError) {
             return new NextResponse(JSON.stringify(error.issues), {
