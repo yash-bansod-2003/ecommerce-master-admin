@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { DashboardHeader } from "@/components/header";
 import { Icons } from "@/components/icons";
 import { DashboardShell } from "@/components/shell";
@@ -18,20 +19,32 @@ export const BillboardClient: React.FC<BillboardClientProps> = ({
 }) => {
     const params = useParams();
     const router = useRouter();
+    const [isLoading, setIsLoading] = React.useState<boolean>(false);
+
+    React.useEffect(() => {
+        () => {
+            setIsLoading(false);
+        };
+    }, []);
 
     return (
         <DashboardShell>
             <DashboardHeader
-                heading="Billboards"
+                heading={`Billboards(${billboards.length})`}
                 text="Revolutionize your brand visibility with easy billboard customization."
             >
                 <Button
-                    onClick={() =>
-                        router.push(`/${params.storeId}/billboards/new`)
-                    }
+                    onClick={() => {
+                        setIsLoading(true);
+                        router.push(`/${params.storeId}/billboards/new`);
+                    }}
                 >
-                    <Icons.add className="h-4 w-4 mr-2" />
-                    Create Billboard
+                    {isLoading ? (
+                        <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                    ) : (
+                        <Icons.add className="mr-2 h-4 w-4" />
+                    )}
+                    Add new
                 </Button>
             </DashboardHeader>
             <div className="grid gap-10">

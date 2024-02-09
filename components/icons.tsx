@@ -33,6 +33,7 @@ import {
     Trash2,
     Server,
     Receipt,
+    Save,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -104,6 +105,7 @@ export const Icons = {
     edit: Pencil,
     server: Server,
     order: Receipt,
+    save: Save,
     noData: ({ ...props }: LucideProps) => (
         <svg
             xmlns="http://www.w3.org/2000/svg"

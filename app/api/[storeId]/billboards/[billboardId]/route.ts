@@ -55,7 +55,7 @@ export async function PATCH(
         const payload = billboardEditSchema.parse(body);
 
         // Update the billboard.
-        await db.billboard.update({
+        const dbUpdatedBillboard = await db.billboard.update({
             where: {
                 id: params.billboardId,
                 storeId: params.storeId,
@@ -67,7 +67,7 @@ export async function PATCH(
             },
         });
 
-        return new NextResponse(null, { status: 200 });
+        return NextResponse.json(dbUpdatedBillboard, { status: 200 });
     } catch (error) {
         if (error instanceof z.ZodError) {
             return new NextResponse(JSON.stringify(error.issues), {

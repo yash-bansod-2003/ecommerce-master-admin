@@ -33,8 +33,12 @@ const BillboardsPage: React.FC<BillboardPageProps> = async ({ params }) => {
     return (
         <DashboardShell>
             <DashboardHeader
-                heading="Billboard"
-                text="Manage billboard at one place."
+                heading={billboard ? "Edit Billboard" : "Create Billboard"}
+                text={
+                    billboard
+                        ? "Edit billboard details at one place."
+                        : "Fill deatails and create new billboard."
+                }
             />
             <div className="grid gap-10">
                 <BillboardForm billboard={billboard} storeId={params.storeId} />

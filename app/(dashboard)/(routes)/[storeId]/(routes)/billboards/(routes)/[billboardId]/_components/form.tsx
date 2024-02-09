@@ -37,6 +37,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
 }) => {
     const router = useRouter();
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
+    const [isEdit, setIsEdit] = React.useState<boolean>(!!billboard);
 
     // 1. Define your form.
     const form = useForm<z.infer<typeof billboardSchema>>({
@@ -47,11 +48,15 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
         },
     });
 
+    const url = billboard
+        ? `/api/${storeId}/billboards/${billboard.id}`
+        : `/api/${storeId}/billboards`;
+
     async function onSubmit(values: z.infer<typeof billboardSchema>) {
         setIsLoading(true);
 
-        const response = await fetch(`/api/${storeId}/billboards`, {
-            method: "POST",
+        const response = await fetch(url, {
+            method: isEdit ? "PATCH" : "POST",
             headers: {
                 "Content-Type": "application/json",
             },
@@ -74,9 +79,12 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
 
         router.push(`/${billboard.storeId}/billboards`);
 
-        return toast.success("Your Billboard was created.", {
-            description: "please check your dashboard for further updates.",
-        });
+        return toast.success(
+            `Your Billboard was ${isEdit ? "updated " : "created"}.`,
+            {
+                description: "please check your dashboard for further updates.",
+            },
+        );
     }
 
     return (
@@ -130,10 +138,12 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
                     >
                         {isLoading ? (
                             <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                        ) : billboard ? (
+                            <Icons.save className="mr-2 h-4 w-4" />
                         ) : (
                             <Icons.add className="mr-2 h-4 w-4" />
                         )}
-                        Save Changes
+                        {billboard ? "Update Changes" : "Create Billboard"}
                     </Button>
                 </div>
             </form>
