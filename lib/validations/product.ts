@@ -10,3 +10,14 @@ export const productSchema = z.object({
     isFeatured: z.boolean().default(false).optional(),
     isArchived: z.boolean().default(false).optional(),
 });
+
+export const productEditSchema = z.object({
+    name: z.string().min(1).max(25).optional(),
+    image: z.string().min(1).optional(),
+    price: z.coerce.number().min(1).optional(),
+    categoryId: z.string().min(1).optional(),
+    colorId: z.string().min(1).optional(),
+    sizeId: z.string().min(1).optional(),
+    isFeatured: z.boolean().default(false).optional(),
+    isArchived: z.boolean().default(false).optional(),
+});
