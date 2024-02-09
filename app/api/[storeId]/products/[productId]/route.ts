@@ -2,7 +2,7 @@ import { auth } from "@clerk/nextjs";
 import { z } from "zod";
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { productSchema } from "@/lib/validations/product";
+import { productSchema, productEditSchema } from "@/lib/validations/product";
 
 const routeContextSchema = z.object({
     params: z.object({
@@ -49,7 +49,7 @@ export async function PATCH(
 
         // Get the request body and validate it.
         const body = await req.json();
-        const payload = productSchema.parse(body);
+        const payload = productEditSchema.parse(body);
 
         // Update the product.
         await db.product.update({

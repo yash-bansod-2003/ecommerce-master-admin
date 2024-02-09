@@ -2,7 +2,10 @@ import { auth } from "@clerk/nextjs";
 import { z } from "zod";
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { billboardSchema } from "@/lib/validations/billboard";
+import {
+    billboardSchema,
+    billboardEditSchema,
+} from "@/lib/validations/billboard";
 
 const routeContextSchema = z.object({
     params: z.object({
@@ -49,7 +52,7 @@ export async function PATCH(
 
         // Get the request body and validate it.
         const body = await req.json();
-        const payload = billboardSchema.parse(body);
+        const payload = billboardEditSchema.parse(body);
 
         // Update the billboard.
         await db.billboard.update({

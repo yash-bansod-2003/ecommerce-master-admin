@@ -2,7 +2,7 @@ import { auth } from "@clerk/nextjs";
 import { z } from "zod";
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { sizeSchema } from "@/lib/validations/size";
+import { sizeSchema, sizeEditSchema } from "@/lib/validations/size";
 
 const routeContextSchema = z.object({
     params: z.object({
@@ -49,7 +49,7 @@ export async function PATCH(
 
         // Get the request body and validate it.
         const body = await req.json();
-        const payload = sizeSchema.parse(body);
+        const payload = sizeEditSchema.parse(body);
 
         // Update the billboard.
         await db.color.update({

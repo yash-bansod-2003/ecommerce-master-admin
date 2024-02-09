@@ -2,7 +2,7 @@ import { auth } from "@clerk/nextjs";
 import { z } from "zod";
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
-import { categorySchema } from "@/lib/validations/category";
+import { categorySchema, categoryEditSchema } from "@/lib/validations/category";
 
 const routeContextSchema = z.object({
     params: z.object({
@@ -49,7 +49,7 @@ export async function PATCH(
 
         // Get the request body and validate it.
         const body = await req.json();
-        const payload = categorySchema.parse(body);
+        const payload = categoryEditSchema.parse(body);
 
         // Update the billboard.
         await db.category.update({
